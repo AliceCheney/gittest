@@ -22,7 +22,7 @@
 
 ### **2.**你对Maven是怎么理解的？
 
-### 3.Spring MVC中的注解你都用过哪些，**SpringMVC的运行原理是什么？
+### 3.Spring MVC中的注解你都用过哪些，SpringMVC的运行原理是什么？
 
 ### 4.SSM整合的流程？
 
