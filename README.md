@@ -46,23 +46,27 @@ NoSQL，泛指非关系型的数据库。
 
 1).初次上传的时候:
 
-	1.git init
-	
-	2.git add . 
-	
-	3.git commit -m "起个名字"
-	
-	4.git remote add origin 你的网址
-	
-	5.git push -u origin master
-	
-	2).二次上传的时候
-	
-	1.git add .
-	
-	2.git commit -m "起个名字“
-	
-	3.git push -u origin master
+```
+1.git init
+
+2.git add . 
+
+3.git commit -m "起个名字"
+
+4.git remote add origin 你的网址
+
+5.git push -u origin master
+```
+
+2).二次上传的时候
+
+```
+1.git add .
+
+2.git commit -m "起个名字“
+
+3.git push -u origin master
+```
 
    git回退:
 
@@ -101,17 +105,17 @@ compile:编译依赖，默认的依赖方式，在编译（编译项目和编译
 ##### “Mvn Clean Package”命令进行项目打包，请问该命令执行了哪些动作来完成该任务？
 
 ```
-maven-clean-plugin:clean`
+maven-clean-plugin:clean
 
-`maven-resources-plugin:resources`
+maven-resources-plugin:resources
 
-`maven-compile-plugin:compile`
+maven-compile-plugin:compile
 
-`mavne-resources-plugin:testResources`
+mavne-resources-plugin:testResources
 
-`maven-compile-plugin:testCompile`
+maven-compile-plugin:testCompile
 
-`maven-jar-plugin:jar
+maven-jar-plugin:jar
 ```
 
 ##### Java设计原则：
