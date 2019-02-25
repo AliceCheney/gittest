@@ -367,6 +367,20 @@ systemctl start nginx
 
 6.负载均衡：负载均衡即是代理服务器将接收的请求均衡的分发到各服务器中     负载均衡主要解决网络拥塞问题，提高服务器响应速度，服务就近提供，达到更好的访问质量，减少后台服务器大并发压力
 
+##### docker的命令
+
+1.运行镜像
+
+```
+docker run --name nginx1 -p 8110:80 -v /usr/share/nginx/html:/usr/share/nginx/html -d nginx
+```
+
+2.dockerjar包镜像
+
+```
+docker  build -t "名字" .
+```
+
 ##### AOP
 
 AOP称为面向切面编程，在程序开发中主要用来解决一些系统层面上的问题，比如日志，事务，权限等待，Struts2的拦截器设计就是基于AOP的思想，是个比较经典的例子。
