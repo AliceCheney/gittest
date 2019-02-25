@@ -173,7 +173,7 @@ Java监听模式右三个部分组成：事件源、事件对象、事件监听�
 
 内连接就是两张表中都包含的数据，因为部门表包含了员工表，所以内连接就是上图中绿色部分
 
-```
+```sql
 SELECT * FROM tbl_dept a INNER JOIN tbl_emp b ON a.id = b.deptId;
 ```
 
@@ -181,7 +181,7 @@ SELECT * FROM tbl_dept a INNER JOIN tbl_emp b ON a.id = b.deptId;
 
 左外连接就是查询join左边表中的所有数据，并且把join右边表中对应的数据查询出来
 
-```
+```sql
 SELECT * FROM tbl_dept a LEFT JOIN tbl_emp b ON a.id=b.deptId;
 ```
 
@@ -189,13 +189,13 @@ SELECT * FROM tbl_dept a LEFT JOIN tbl_emp b ON a.id=b.deptId;
 
 其实就是在左外连接在后面加了一个where条件，查询只存在于join左边表的内容
 
-```
+```sql
 SELECT * FROM tbl_dept a LEFT JOIN tbl_emp b ON a.id=b.deptId WHERE b.deptId IS NULL;
 ```
 
 4.全连接
 
-```
+```sql
 SELECT * FROM tbl_dept a RIGHT JOIN tbl_emp b ON a.id=b.deptId 
 UNION 
 SELECT * FROM tbl_dept a LEFT JOIN tbl_emp b ON a.id=b.deptId;
@@ -203,7 +203,7 @@ SELECT * FROM tbl_dept a LEFT JOIN tbl_emp b ON a.id=b.deptId;
 
 5.--两张表中都没有同时出现的数据集
 
-```
+```sql
 SELECT * FROM tbl_dept a RIGHT JOIN tbl_emp b ON a.id=b.deptId WHERE a.id IS NULL
 UNION 
 SELECT * FROM tbl_dept a LEFT JOIN tbl_emp b ON a.id=b.deptId  WHERE b.deptId IS NULL;
@@ -271,5 +271,189 @@ SELECT * FROM tbl_dept a LEFT JOIN tbl_emp b ON a.id=b.deptId  WHERE b.deptId IS
 3.大表水平分拆
 
 4.选择合适的数据类型
+```
+
+##### Linux命令行：
+
+连接服务器：ssh root@网址
+
+查看文件列表：ls
+
+返回主目录：cd /
+
+返回上一级：cd ..
+
+选择文件：cd /文件名
+
+打开文件：vim /文件名
+
+运行程序：./
+
+创建文件夹：mkdir 文件名
+
+创建文件：vim 文件名 或者 touch 文件名
+
+vim操作：wq保存并退出  q!强制退出 
+
+删除文件：rm 文件名
+
+删除文件夹：rm -r -f 文件夹名
+
+上传文件：scp 要传的文件路径 root@你的服务器地址：传到服务器的哪个文件
+
+开启服务：systemctl start 你要开启的服务 
+
+关闭服务：systemctl stop 你要关闭的服务
+
+开机启动服务：systemctl enable 服务名
+
+配置环境变量：vim /etc/profile
+
+应用环境变量: source /etc/profile
+
+暂时更改环境变量：export  环境变量名=环境变量值
+
+##### AOP
+
+AOP称为面向切面编程，在程序开发中主要用来解决一些系统层面上的问题，比如日志，事务，权限等待，Struts2的拦截器设计就是基于AOP的思想，是个比较经典的例子。
+
+AOP的基本概念
+
+(1)Aspect(切面):通常是一个类，里面可以定义切入点和通知
+
+(2)JointPoint(连接点):程序执行过程中明确的点，一般是方法的调用
+
+(3)Advice(通知):AOP在特定的切入点上执行的增强处理，有before,after,afterReturning,afterThrowing,around
+
+(4)Pointcut(切入点):就是带有通知的连接点，在程序中主要体现为书写切入点表达式
+
+(5)AOP代理：AOP框架创建的对象，代理就是目标对象的加强。Spring中的AOP代理可以使JDK动态代理，也可以是CGLIB代理，前者基于接口，后者基于子类
+
+二 Spring AOP
+
+Spring中的AOP代理还是离不开Spring的IOC容器，代理的生成，管理及其依赖关系都是由IOC容器负责，Spring默认使用JDK动态代理，在需要代理类而不是代理接口的时候，Spring会自动切换为使用CGLIB代理，不过现在的项目都是面向接口编程，所以JDK动态代理相对来说用的还是多一些。
+
+三 基于注解的AOP配置方式
+
+1.启用@AsjectJ支持
+
+在applicationContext.xml中配置下面一句:
+
+```xml
+<aop:aspectj-autoproxy />
+```
+
+2.通知类型介绍
+
+(1)Before:在目标方法被调用之前做增强处理,@Before只需要指定切入点表达式即可
+
+(2)AfterReturning:在目标方法正常完成后做增强,@AfterReturning除了指定切入点表达式后，还可以指定一个返回值形参名returning,代表目标方法的返回值
+
+(3)AfterThrowing:主要用来处理程序中未处理的异常,@AfterThrowing除了指定切入点表达式后，还可以指定一个throwing的返回值形参名,可以通过该形参名
+
+来访问目标方法中所抛出的异常对象
+
+(4)After:在目标方法完成之后做增强，无论目标方法时候成功完成。@After可以指定一个切入点表达式
+
+(5)Around:环绕通知,在目标方法完成前后做增强处理,环绕通知是最重要的通知类型,像事务,日志等都是环绕通知,注意编程中核心是一个ProceedingJoinPoint
+
+##### aop的用途
+
+日志记录、事务控制、权限控制、性能统计、异常处理及事务处理
+
+##### ORM框架
+
+ORM（Object Relational Mapping）框架采用元数据来描述对象一关系映射细节，元数据一般采用XML格式，并且存放在专门的对象一映射文件中。
+
+##### 数据库事务
+
+**原子性：**一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。
+
+**一致性：**在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。
+
+**隔离性：**数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。
+
+**持久性：**事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。数据库
+
+##### 数据库创建索引
+
+直接创建普通索引
+
+```sql
+CREATE INDEX index_name ON table(column(length))
+```
+
+修改表结构的方式添加普通索引
+
+```sql
+ALTER TABLE table_name ADD INDEX index_name ON (column(length))
+```
+
+添加唯一索引
+
+```sql
+ALTER TABLE table_name ADD UNIQUE ( column )
+```
+
+##### sql优化
+
+```yi
+1.对查询进行优化，要尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。
+
+2.应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描
+
+3.应尽量避免在 where 子句中使用 != 或 <> 操作符，否则将引擎放弃使用索引而进行全表扫描。
+
+4.应尽量避免在 where 子句中使用 or 来连接条件，如果一个字段有索引，一个字段没有索引，将导致引擎放弃使用索引而进行全表扫描
+
+5.in 和 not in 也要慎用，对于连续的数值，能用 between 就不要用 in 了，很多时候用 exists 代替 in 是一个好的选择
+
+6.如果在 where 子句中使用参数，也会导致全表扫描。因为SQL只有在运行时才会解析局部变量，但优化程序不能将访问计划的选择推迟到运行时；它必须在编译时进行选择。然 而，如果在编译时建立访问计划，变量的值还是未知的，因而无法作为索引选择的输入项。如下面语句将进行全表扫描：
+
+7..应尽量避免在 where 子句中对字段进行表达式操作，这将导致引擎放弃使用索引而进行全表扫描。
+
+8.应尽量避免在where子句中对字段进行函数操作，这将导致引擎放弃使用索引而进行全表扫描。
+
+9.不要在 where 子句中的“=”左边进行函数、算术运算或其他表达式运算，否则系统将可能无法正确使用索引。
+
+10.在使用索引字段作为条件时，如果该索引是复合索引，那么必须使用到该索引中的第一个字段作为条件时才能保证系统使用该索引，否则该索引将不会被使用，并且应尽可能的让字段顺序与索引顺序相一致。 
+
+11.不要写一些没有意义的查询，如需要生成一个空表结构
+
+12.Update 语句，如果只更改1、2个字段，不要Update全部字段，否则频繁调用会引起明显的性能消耗，同时带来大量日志
+
+13.对于多张大数据量（这里几百条就算大了）的表JOIN，要先分页再JOIN，否则逻辑读会很高，性能很差。
+
+14.select count(*) from table；这样不带任何条件的count会引起全表扫描，并且没有任何业务意义，是一定要杜绝的。
+
+15.索引并不是越多越好，索引固然可以提高相应的 select 的效率，但同时也降低了 insert 及 update 的效率，因为 insert 或 update 时有可能会重建索引，所以怎样建索引需要慎重考虑，视具体情况而定。一个表的索引数最好不要超过6个，若太多则应考虑一些不常使用到的列上建的索引是否有 必要。
+
+16.应尽可能的避免更新 clustered 索引数据列，因为 clustered 索引数据列的顺序就是表记录的物理存储顺序，一旦该列值改变将导致整个表记录的顺序的调整，会耗费相当大的资源。若应用系统需要频繁更新 clustered 索引数据列，那么需要考虑是否应将该索引建为 clustered 索引。
+
+17.尽量使用数字型字段，若只含数值信息的字段尽量不要设计为字符型，这会降低查询和连接的性能，并会增加存储开销。这是因为引擎在处理查询和连 接时会逐个比较字符串中每一个字符，而对于数字型而言只需要比较一次就够了。
+
+18.尽可能的使用 varchar/nvarchar 代替 char/nchar ，因为首先变长字段存储空间小，可以节省存储空间，其次对于查询来说，在一个相对较小的字段内搜索效率显然要高些。
+
+19.任何地方都不要使用 select * from t ，用具体的字段列表代替“*”，不要返回用不到的任何字段。
+
+20.尽量使用表变量来代替临时表。如果表变量包含大量数据，请注意索引非常有限（只有主键索引）。
+
+21.避免频繁创建和删除临时表，以减少系统表资源的消耗。临时表并不是不可使用，适当地使用它们可以使某些例程更有效，例如，当需要重复引用大型表或常用表中的某个数据集时。但是，对于一次性事件， 最好使用导出表。 
+
+22.在新建临时表时，如果一次性插入数据量很大，那么可以使用 select into 代替 create table，避免造成大量 log ，以提高速度；如果数据量不大，为了缓和系统表的资源，应先create table，然后insert。
+
+23.如果使用到了临时表，在存储过程的最后务必将所有的临时表显式删除，先 truncate table ，然后 drop table ，这样可以避免系统表的较长时间锁定。
+
+24.尽量避免使用游标，因为游标的效率较差，如果游标操作的数据超过1万行，那么就应该考虑改写。
+
+25.使用基于游标的方法或临时表方法之前，应先寻找基于集的解决方案来解决问题，基于集的方法通常更有效。
+
+26.与临时表一样，游标并不是不可使用。对小型数据集使用 FAST_FORWARD 游标通常要优于其他逐行处理方法，尤其是在必须引用几个表才能获得所需的数据时。在结果集中包括“合计”的例程通常要比使用游标执行的速度快。如果开发时 间允许，基于游标的方法和基于集的方法都可以尝试一下，看哪一种方法的效果更好。
+
+27.在所有的存储过程和触发器的开始处设置 SET NOCOUNT ON ，在结束时设置 SET NOCOUNT OFF 。无需在执行存储过程和触发器的每个语句后向客户端发送 DONE_IN_PROC 消息。 
+
+28.尽量避免大事务操作，提高系统并发能力。
+
+29.尽量避免向客户端返回大数据量，若数据量过大，应该考虑相应需求是否合理。
 ```
 
