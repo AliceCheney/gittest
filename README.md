@@ -293,7 +293,7 @@ SELECT * FROM tbl_dept a LEFT JOIN tbl_emp b ON a.id=b.deptId  WHERE b.deptId IS
 ##### 数据库设计原则
 
 ```
-1.适度冗余， 让query尽量减少join
+1.适度冗余， 让query（查询）尽量减少join（连接）
 
 2.大字段垂直分拆
 
